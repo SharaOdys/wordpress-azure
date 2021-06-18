@@ -59,7 +59,8 @@
             { "name": "WEBSITE_MYSQL_ENABLED", "value": "1" },
             { "name": "WEBSITE_MYSQL_GENERAL_LOG", "value": "0" },
             { "name": "WEBSITE_MYSQL_SLOW_QUERY_LOG", "value": "0" },
-            { "name": "WEBSITE_MYSQL_ARGUMENTS", "value": "--max_allowed_packet=16M" }
+            { "name": "WEBSITE_MYSQL_ARGUMENTS", "value": "--max_allowed_packet=16M" },
+            { "name": "WEBSITES_ENABLE_APP_SERVICE_STORAGE", "value": "true" }
           ]
         }
       },
@@ -86,7 +87,7 @@
           ],
           "properties": {
            
-            "phpVersion": "7.2"
+            "phpVersion": "7.4"
           }
         }
       ]
