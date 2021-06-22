@@ -21,26 +21,14 @@
       "defaultValue": "F1"
     },
     "repoUrl": {
-    "type": "string",
-    "defaultValue": "https://github.com/SharaOdys/wordpress-azure"
+      "type": "string",
+      "defaultValue": "https://github.com/SharaOdys/wordpress-azure"
     },
     "branch": {
       "type": "string",
       "defaultValue": "linux-appservice"
-    }
-  },
-  "resources": [
-    {
-      "apiVersion": "2015-08-01",
-      "name": "[parameters('hostingPlanName')]",
-      "type": "Microsoft.Web/serverFarms",
-      "location": "[parameters('siteLocation')]",
-      "properties": {
-      "sku": {
-        "name": "[parameters('sku')]",
-        "capacity": 1
-      },
-      "administratorLogin": {
+    },
+    "administratorLogin": {
       "type": "string",
       "minLength": 1,
       "metadata": {
@@ -56,7 +44,7 @@
     },
     "skuCapacity": {
       "type": "int",
-      "defaultValue": 1,
+      "defaultValue": 2,
       "metadata": {
         "description": "Azure database for MySQL compute capacity in vCores (1,2,4,8,16,32)"
       }
@@ -157,7 +145,14 @@
         "description": "Subnet Address Prefix"
       }
     },
-"variables": {
+    "serverName": {
+      "type": "string"
+    },
+    "databaseName": {
+      "type": "string"
+    }
+  },
+  "variables": {
     "firewallrules": {
       "batch": {
         "rules": [
@@ -176,6 +171,22 @@
     }
   },
   "resources": [
+    {
+      "apiVersion": "2015-08-01",
+      "name": "[parameters('hostingPlanName')]",
+      "type": "Microsoft.Web/serverFarms",
+      "location": "[parameters('siteLocation')]",
+      "sku": {
+        "name": "[parameters('sku')]",
+        "capacity": 2
+      },
+      "properties": {
+        "sku": {
+          "name": "[parameters('sku')]",
+          "capacity": 2
+        }
+      }
+    },
     {
       "type": "Microsoft.Network/virtualNetworks",
       "apiVersion": "2020-06-01",
@@ -274,23 +285,32 @@
         "serverFarmId": "[parameters('hostingPlanName')]",
         "siteConfig": {
           "localMySqlEnabled": true,
-		  "connectionStrings": [
-                        {
-                            "name": "defaultConnection",
-                            "ConnectionString": "[concat('Database=', parameters('databaseName'), ';Data Source=', parameters('serverName') ,'.mysql.database.azure.com;User Id=',parameters('administratorLogin'),'@',parameters('serverName') ,';Password=',parameters('administratorLoginPassword'))]",
-                            "type": "MySQL"
-                        }
-                    ],
-           "appSettings": [
-            { "name": "WEBSITES_ENABLE_APP_SERVICE_STORAGE", "value": "true" },
-	        { "name": "GIT_REPO", "value": "[parameters('repoUrl')]" },
-            { "name": "GIT_BRANCH", "value": "[parameters('branch')]"}
+          "connectionStrings": [
+            {
+              "name": "defaultConnection",
+              "ConnectionString": "[concat('Database=', parameters('databaseName'), ';Data Source=', parameters('serverName') ,'.mysql.database.azure.com;User Id=',parameters('administratorLogin'),'@',parameters('serverName') ,';Password=',parameters('administratorLoginPassword'))]",
+              "type": "MySQL"
+            }
+          ],
+          "appSettings": [
+            {
+              "name": "WEBSITES_ENABLE_APP_SERVICE_STORAGE",
+              "value": "true"
+            },
+            {
+              "name": "GIT_REPO",
+              "value": "[parameters('repoUrl')]"
+            },
+            {
+              "name": "GIT_BRANCH",
+              "value": "[parameters('branch')]"
+            }
           ]
         }
       },
       "resources": [
         {
-          "apiVersion": "2015-08-01",
+          "apiVersion": "2018-11-01",
           "name": "web",
           "type": "sourcecontrols",
           "dependsOn": [
@@ -303,7 +323,7 @@
           }
         },
         {
-          "apiVersion": "2015-08-01",
+          "apiVersion": "2016-08-01",
           "name": "web",
           "type": "config",
           "dependsOn": [
@@ -317,7 +337,4 @@
       ]
     }
   ]
-}
-}
-]
 }
