@@ -21,7 +21,8 @@
       "defaultValue": "F1"
     },
     "repoUrl": {
-      "type": "string"
+    "type": "string"
+    "defaultValue": "https://github.com/SharaOdys/wordpress-azure"
     },
     "branch": {
       "type": "string",
@@ -71,8 +72,8 @@
                     "type": "firewallrules",
                     "apiVersion": "2017-12-01-preview",
                     "properties": {
-                        "startIpAddress": "0.0.0.0",
-                        "endIpAddress": "255.255.255.255"
+                    "startIpAddress": "0.0.0.0",
+                    "endIpAddress": "255.255.255.255"
                     },
                     "location": "[parameters('mysqLocation')]",
                     "dependsOn": [
@@ -85,8 +86,8 @@
                     "type": "databases",
                     "apiVersion": "2017-12-01-preview",
                     "properties": {
-                        "charset": "[parameters('charset')]",
-                        "collation": "[parameters('collation')]"
+                    "charset": "[parameters('charset')]",
+                    "collation": "[parameters('collation')]"
                     },
                     "dependsOn": [
                         "[concat('Microsoft.DBforMySQL/servers/', parameters('serverName'))]"
@@ -102,7 +103,8 @@
       "name": "[parameters('siteName')]",
       "type": "Microsoft.Web/Sites",
       "location": "[parameters('siteLocation')]",
-	  "kind": "app,linux",
+      "kind": "app,linux",
+      "serverName": "WordPressOnLinux"
       "dependsOn": [
         "[concat('Microsoft.Web/serverFarms/', parameters('hostingPlanName'))]"
       ],
@@ -120,7 +122,7 @@
                     ],
            "appSettings": [
             { "name": "WEBSITES_ENABLE_APP_SERVICE_STORAGE", "value": "true" },
-			{ "name": "GIT_REPO", "value": "https://github.com/SharaOdys/wordpress-azure" },
+	    { "name": "GIT_REPO", "value": "https://github.com/SharaOdys/wordpress-azure" },
             { "name": "GIT_BRANCH", "value": "linux-appservice"}
           ]
         }
