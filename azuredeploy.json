@@ -41,7 +41,7 @@
       "sku": {
         "name": "[parameters('sku')]",
         "capacity": 1
-      }
+      },
       "administratorLogin": {
       "type": "string",
       "minLength": 1,
