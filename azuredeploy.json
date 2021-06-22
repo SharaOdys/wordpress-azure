@@ -158,7 +158,6 @@
       "metadata": {
         "description": "Subnet Address Prefix"
       }
-    }
     },
 "variables": {
     "firewallrules": {
