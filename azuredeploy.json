@@ -21,7 +21,7 @@
       "defaultValue": "F1"
     },
     "repoUrl": {
-    "type": "string"
+    "type": "string",
     "defaultValue": "https://github.com/SharaOdys/wordpress-azure"
     },
     "branch": {
