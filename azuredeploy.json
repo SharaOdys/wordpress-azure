@@ -104,7 +104,7 @@
       "type": "Microsoft.Web/Sites",
       "location": "[parameters('siteLocation')]",
       "kind": "app,linux",
-      "serverName": "WordPressOnLinux"
+      "serverName": "WordPressOnLinux",
       "dependsOn": [
         "[concat('Microsoft.Web/serverFarms/', parameters('hostingPlanName'))]"
       ],
