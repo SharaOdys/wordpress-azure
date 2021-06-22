@@ -27,8 +27,7 @@
     "branch": {
       "type": "string",
       "defaultValue": "linux-appservice"
-    },
-    
+    }
   },
   "resources": [
     {
